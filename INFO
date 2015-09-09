@@ -1,0 +1,34 @@
+Project: Smooth Upgrade (escalator)
+Project Creation Date: April 21, 2015
+Project Category: Requirements
+Lifecycle State: Incubation
+Primary Contact: Jie Hu (ZTE, hu.jie@zte.com.cn)
+Project Lead: Jie Hu (hujie)
+Jira Project Name: Smooth Upgrade
+Jira Project Prefix: escalator
+Repository: escalator
+Mailing list tag: [escalator]
+Meetings: Every Thursday 1200-1300 UTC
+IRC : #opnfv-meeting @ Freenode.net
+
+
+Committers:
+hu.jie@zte.com.cn
+fuqiao@chinamobile.com
+ulrich.kleber@huawei.com
+maria.toeroe@ericsson.com
+
+Contributors:
+sama@docomolab-euro.com
+chao.zhong@zte.com.cn
+zhang.jun3g@zte.com.cn
+yuan.yue@zte.com.cn
+huangzhipeng@huawei.com
+meng.jia@zte.com.cn
+liyi.meng@ericsson.com
+pasi.vaananen@stratus.com
+
+Link to TSC approval of the project:
+http://meetbot.opnfv.org/meetings/opnfv-meeting/2015/opnfv-meeting.2015-04-21-14.00.html
+Link(s) to approval of project lead and additional committers:
+https://wiki.opnfv.org/meetings/escalator#minutes_of_may_7th_2015
