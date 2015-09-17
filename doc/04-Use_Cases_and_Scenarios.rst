@@ -28,5 +28,5 @@ keystone for both sites).
 If a site failure during an upgrade, the roll-back missing any minimal
 state/data loss can cause an affect/failure to the depended site.
 
-==Consider one site of ARNO release first. Then, multi-site in the
-future.==
+.. <hujie> Consider one site of ARNO release first. Then, multi-site 
+  in the future.
