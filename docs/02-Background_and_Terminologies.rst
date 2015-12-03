@@ -7,11 +7,14 @@ Terminologies and definitions
 NFVI
   The term is an abbreviation for Network Function Virtualization
   Infrastructure; sometimes it is also referred as data plane in this
-  document.
+  document. The NFVI provides the virtual resources to the virtual
+  network functions under the control of the VIM.
 
 VIM
-  The term is an abbreviation for Virtual Infrastructure Management;
+  The term is an abbreviation for Virtual Infrastructure Manager;
   sometimes it is also referred as control plane in this document.
+  The VIM controls and manages the NFVI compute, network and storage
+  resources to provide the required virtual resources to the VNFs.
 
 Operator
   The term refers to network service providers and Virtual Network
@@ -22,24 +25,24 @@ End-User
 
 Network Service
   The term refers to a service provided by an Operator to its
-  End-users using a set of (virtualized) Network Functions
+  end-users using a set of (virtualized) Network Functions
 
 Infrastructure Services
-  The term refers to services provided by the NFV Infrastructure and the
-  the Management & Orchestration functions to the VNFs. I.e.
-  these are the virtual resources as perceived by the VNFs.
+  The term refers to services provided by the NFV Infrastructure to the VNFs
+  as required by the Management & Orchestration functions and especially the VIM.
+  I.e. these are the virtual resources as perceived by the VNFs.
 
 Smooth Upgrade
   The term refers to an upgrade that results in no service outage
   for the end-users.
 
 Rolling Upgrade
-  The term refers to an upgrade strategy that upgrades each node or
-  a subset of nodes in a wave style rolling through the data centre. It
+  The term refers to an upgrade strategy, which upgrades a node or a subset
+  of nodes at a time in a wave style rolling through the data centre. It
   is a popular upgrade strategy to maintain service availability.
 
 Parallel Universe Upgrade
-  The term refers to an upgrade strategy that creates and deploys
+  The term refers to an upgrade strategy, which creates and deploys
   a new universe - a system with the new configuration - while the old
   system continues running. The state of the old system is transferred
   to the new system after sufficient testing of the new system.
@@ -50,14 +53,14 @@ Infrastructure Resource Model
   facility resources and the virtual resources.
 
 Physical Resource
-  The term refers to a hardware pieces of the NFV infrastructure, which may
-  also include the firmware which enables the hardware.
+  The term refers to a piece of hardware in the NFV infrastructure that may
+  also include firmware enabling this piece of hardware.
 
 Virtual Resource
   The term refers to a resource, which is provided as services built on top
   of the physical resources via the virtualization facilities; in particular,
-  they are the resources on which VNF entities are deployed, e.g.
-  the VMs, virtual switches, virtual routers, virtual disks etc.
+  virtual resources are the resources on which VNFs are deployed. Examples of
+  virtual resources are: VMs, virtual switches, virtual routers, virtual disks.
 
 Visualization Facility
   The term refers to a resource that enables the creation
@@ -75,8 +78,9 @@ Upgrade Duration
   The duration of an upgrade characterized by the time elapsed between its
   initiation and its completion. E.g. from the moment the execution of an
   upgrade campaign has started until it has been committed. Depending on
-  the upgrade method and its target some parts of the system may be in a more
-  vulnerable state.
+  the upgrade strategy, the state of the configuration and the upgrade target
+  some parts of the system may be in a more vulnerable state with respect to
+  service availbility.
 
 Outage
   The period of time during which a given service is not provided is referred
@@ -90,10 +94,19 @@ Rollback
   done by a potentially failed upgrade execution one by one in a reverse order.
   I.e. it is like undoing the changes done by the upgrade.
 
+Backup
+  The term refers to data persisted to a storage, so that it can be used to
+  restore the system or a given part of it in the same state as it was when the
+  backup was created assuming a cold restart. Changes made to the system from
+  the moment the backup was created till the moment it is used to restore the
+  (sub)system are lost in the restoration process.
+
 Restore
   The term refers to a failure handling strategy that reverts the changes
-  done by an upgrade by restoring the system from some backup data. This
-  results in the loss of any data persisted since the backup has been taken.
+  done, for example, by an upgrade by restoring the system from some backup
+  data. This results in the loss of any change and data persisted after the
+  backup was been taken. To recover those additional measures need to be taken
+  if necessary (e.g. rollforward).
 
 Rollforward
   The term refers to a failure handling strategy applied after a restore
@@ -118,10 +131,11 @@ Upgrade Objects
 Physical Resource
 ^^^^^^^^^^^^^^^^^
 
-Most cloud infrastructures support the dynamic addition/removal of
+Most cloud infrastructures support the dynamic addition and removal of
 hardware. Accordingly a hardware upgrade could be done by adding the new
 piece of hardware and removing the old one. From the persepctive of smooth
-upgrade the orchestration/scheduling of this actions is the primary concern.
+upgrade the orchestration/scheduling of these actions is the primary concern.
+
 Upgrading a physical resource may involve as well the upgrade of its firmware
 and/or modifying its configuration data. This may require the restart of the
 hardware.
@@ -143,8 +157,7 @@ the virtualization facility resources may result in the upgrade of the virtual
 resources. For example if by some reason the hypervisor is changed and
 the current VMs cannot be migrated to the new hypervisor - they are
 incompatible - then the VMs need to be upgraded too. This is not
-something the NFVI user (i.e. VNFs ) would know about. In such cases
-smooth upgrade is essential.
+something the NFVI user (i.e. VNFs ) would know about. 
 
 
 Virtualization Facility Resources
@@ -154,7 +167,7 @@ Based on the functionality they provide, virtualization facility
 resources could be divided into computing node, networking node,
 storage node and management node.
 
-The possible upgrade objects in these nodes are addressed below:
+The possible upgrade objects in these nodes are considered below:
 (Note: hardware based virtualization may be considered as virtualization
 facility resource, but from escalator perspective, it is better to
 consider it as part of the hardware upgrade. )
@@ -165,19 +178,24 @@ consider it as part of the hardware upgrade. )
 
 2. Hypvervisor and virtual switch
 
-3. Other kernel modules, like driver
+3. Other kernel modules, like drivers
 
 4. User space software packages, like nova-compute agents and other
    control plane programs.
 
 Updating 1 and 2 will cause the loss of virtualzation functionality of
-the compute node, which may lead to data plane services interruption
+the compute node, which may lead to the interruption of data plane services 
 if the virtual resource is not redudant.
 
-Updating 3 might result the same.
+Updating 3 might have the same result.
 
 Updating 4 might lead to control plane services interruption if not an
 HA deployment.
+
+.. <MT> I'm not sure why would 4 cause control plane interruption on a
+   compute node. My understanding is that simply the node cannot be managed.
+   Redundancy won't help in that either.
+
 
 **Networking node**
 
