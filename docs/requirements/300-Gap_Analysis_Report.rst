@@ -1,8 +1,9 @@
-Appendix
---------
+===================
+Gap Analysis Report
+===================
 
-A.1 Impact Analysis
-~~~~~~~~~~~~~~~~~~~
+Impact Analysis
+===============
 
 Upgrading the different software modules may cause different impact on
 the availability of the infrastructure resources and even on the service
@@ -15,7 +16,7 @@ continuity of the vNFs.
 #. Hypervisor, such as KVM, QEMU, XEN, libvirt
 #. Openstack agent in computing nodes (like Nova agent, Ceilometer
    agent...)
-   
+
 .. <MT> As SW module, we should list the host OS and maybe its
    drivers as well. From upgrade perspective do we limit host OS
    upgrades to patches only?

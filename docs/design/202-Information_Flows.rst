@@ -1,5 +1,6 @@
+=================
 Information Flows
------------------
+=================
 
 This section describes the information flows among the function
 entities when Escalator is in actions.

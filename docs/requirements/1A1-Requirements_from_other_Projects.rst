@@ -1,20 +1,14 @@
-Requirements from other OPNFV projects
---------------------------------------
-
-We have created a questionnaire_ for collecting other projects requirements.
-Please advertise it.
-
-.. _questionnaire: https://docs.google.com/forms/d/11o1mt15zcq0WBtXYK0n6lKF8XuIzQTwvv8ePTjmcoF0/viewform?usp=send_form
-  
-
+================================
+Requirements from other Projects
+================================
 
 Doctor Project
-~~~~~~~~~~~~~~
+==============
 
 .. <Malla> This scenario could be out of scope in Escalator project, but
   having the option to support this should be better to align with
   Doctor requirements.
-  
+
 The scope of Doctor project also covers maintenance scenario in which
 
 1. The VIM administrator requests host maintenance to VIM.
@@ -31,10 +25,10 @@ The scope of Doctor project also covers maintenance scenario in which
    maintenance" message from the owner (VNFM)
 
 HA Project
-~~~~~~~~~~
+==========
 
 Multi-site Project
-~~~~~~~~~~~~~~~~~~
+==================
 
 -  Escalator upgrade one site should at least not lead to the other site
    API token validation failed.

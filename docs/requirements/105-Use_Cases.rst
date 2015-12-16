@@ -1,30 +1,33 @@
-Use Cases and Scenarios
------------------------
+=========
+Use Cases
+=========
 
-This section describes the use cases and scenarios to verify the
-requirements of Escalator.
+This section describes the use cases in different system configuration
+to verify the requirements of Escalator.
 
-Scenarios
-~~~~~~~~~
-1. Upgrade a system with HA configuration
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+System Configurations
+=====================
+
+HA configuration
+^^^^^^^^^^^^^^^^
 
 A HA configuration system is very popular in the operator's data centre.
 It is a typical product environment. It is always running 7\*24 with VNFs
 running on it to provide services to the end users.
 
 
-2. Upgrade a system with non-HA configuration
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Non-HA configuration
+^^^^^^^^^^^^^^^^^^^^
 
 A non-HA configuration system is normally deployed for experimental or
 development usages, such as a Vagrant/VM environment.
 
-Escalator supports the upgrade in this scenario, but it does not guarantee a
-smooth upgrade.
+Escalator supports the upgrade system in this configuration, but it may
+not guarantee a smooth upgrade.
 
 Use cases
-~~~~~~~~~
+=========
+
 Use case #1: Smooth upgrade in a HA configuration
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 For a system with HA configuration, the operator can use Escalator to
@@ -208,4 +211,3 @@ case,the roll-back may result in service outage.
 - Post-Conditions
 
   1. The system is rolled-back successfully when the upgrade failed.
-

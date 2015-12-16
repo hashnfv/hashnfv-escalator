@@ -1,5 +1,6 @@
-Authors:
---------
+============
+Contributors
+============
 
 | Jie Hu (ZTE, hu.jie@zte.com.cn)
 | Qiao Fu (China Mobile, fuqiao@chinamobile.com)
