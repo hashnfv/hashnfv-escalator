@@ -5,180 +5,42 @@ Requirements
 Upgrade duration
 ================
 
-As the OPNFV end-users are primarily Telecom operators, the network
-services provided by the VNFs deployed on the NFVI should meet the
-requirement of 'Carrier Grade'.::
+Being a telecom service system, OPNFV shall target at carrier grade availability,
+which allows only about 5 minutes of outage in a year. Base on this basic input
+and discussions on the current solutions, The following requirements are defined
+from the perspective of time constraints:
 
-  In telecommunication, a "carrier grade" or"carrier class" refers to a
-  system, or a hardware or software component that is extremely reliable,
-  well tested and proven in its capabilities. Carrier grade systems are
-  tested and engineered to meet or exceed "five nines" high availability
-  standards, and provide very fast fault recovery through redundancy
-  (normally less than 50 milliseconds). [from wikipedia.org]
+- OPNFV platform must be deployed with HA to allow live upgrade possible. Considering of
+  the scale, complexity, and life cycle of OPNFV system, allocating less than
+  5 minutes out of a year for upgrade is in-realistic. Therefore OPNFV should
+  be deployed with HA, allowing part of system being upgraded, while its
+  redundant parts continue to serve End-User. This hopefully relieves the time
+  constraint on upgrade operation to achievable level.
 
-"five nines" means working all the time in ONE YEAR except 5'15".
+- VNF service interruption for each switching should be sub-second range. In
+  HA system, switching from an in-service system/component to the redundant
+  ones normally cause service interruption. From example live-migrating a
+  virtual machine from one hypervisor to another typically take the virtual
+  machine out of service for about 500ms. Summing up all these interruptions in
+  a year shall be less than 5 minutes in order to fulfill the five-nines carrier
+  grade availability. In addition, when interruption goes over a second, End-User
+  experience is likely impacted. This document therefore recommends service
+  switching should be less than a second.
 
-::
+- VIM interruption shall not result in NFVI interruption. VIM in general has more
+  logic built-in, therefore more complicated, and likely less reliable than NFVI.
+  To minimize the impact from VIM to NFVI, unless VIM explicitly order NFVI stop
+  functioning, NFVI shall continue working as it should.
 
-  We have learnt that a well prepared upgrade of OpenStack needs 10
-  minutes. The major time slot in the outage time is used spent on
-  synchronizing the database. [from ' Ten minutes OpenStack Upgrade? Done!
-  ' by Symantec]
-
-This 10 minutes of downtime of the OpenStack services however did not impact the
-users, i.e. the VMs running on the compute nodes. This was the outage of
-the control plane only. On the other hand with respect to the
-preparations this was a manually tailored upgrade specific to the
-particular deployment and the versions of each OpenStack service.
-
-The project targets to achieve a more generic methodology, which however
-requires that the upgrade objects fulfil certain requirements. Since
-this is only possible on the long run we target first the upgrade
-of the different VIM services from version to version.
-
-**Questions:**
-
-1. Can we manage to upgrade OPNFV in only 5 minutes?
-
-.. <MT> The first question is whether we have the same carrier grade
-   requirement on the control plane as on the user plane. I.e. how
-   much control plane outage we can/willing to tolerate?
-   In the above case probably if the database is only half of the size
-   we can do the upgrade in 5 minutes, but is that good? It also means
-   that if the database is twice as much then the outage is 20
-   minutes.
-   For the user plane we should go for less as with two release yearly
-   that means 10 minutes outage per year.
-
-.. <Malla> 10 minutes outage per year to the users? Plus, if we take
-   control plane into the consideration, then total outage will be
-   more than 10 minute in whole network, right?
-
-.. <MT> The control plane outage does not have to cause outage to
-   the users, but it may of course depending on the size of the system
-   as it's more likely that there's a failure that needs to be handled
-   by the control plane.
-
-2. Is it acceptable for end users ? Such as a planed service
-   interruption will lasting more than ten minutes for software
-   upgrade.
-
-.. <MT> For user plane, no it's not acceptable in case of
-   carrier-grade. The 5' 15" downtime should include unplanned and
-   planned downtimes.
-
-.. <Malla> I go agree with Maria, it is not acceptable.
-
-3. Will any VNFs still working well when VIM is down?
-
-.. <MT> In case of OpenStack it seems yes. .:)
-
-The maximum duration of an upgrade
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-The duration of an upgrade is related to and proportional with the
-scale and the complexity of the OPNFV platform as well as the
-granularity (in function and in space) of the upgrade.
-
-.. <Malla> Also, if is a partial upgrade like module upgrade, it depends
-  also on the OPNFV modules and their tight connection entities as well.
-
-.. <MT> Since the maintenance window is shrinking and becoming non-existent
-  the duration of the upgrade is secondary to the requirement of smooth upgrade.
-  But probably we want to be able to put a time constraint on each upgrade
-  during which it must complete otherwise it is considered failed and the system
-  should be rolled back. I.e. in case of automatic execution it might not be clear
-  if an upgrade is long or just hanging. The time constraints may be a function
-  of the size of the system in terms of the upgrade object(s).
-
-The maximum duration of a roll back when an upgrade is failed
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-The duration of a roll back is short than the corresponding upgrade. It
-depends on the duration of restore the software and configure data from
-pre-upgrade backup / snapshot.
-
-.. <MT> During the upgrade process two types of failure may happen:
-  In case we can recover from the failure by undoing the upgrade
-  actions it is possible to roll back the already executed part of the
-  upgrade in graceful manner introducing no more service outage than
-  what was introduced during the upgrade. Such a graceful roll back
-  requires typically the same amount of time as the executed portion of
-  the upgrade and impose minimal state/data loss.
-
-.. <MT> Requirement: It should be possible to roll back gracefully the
-  failed upgrade of stateful services of the control plane.
-  In case we cannot recover from the failure by just undoing the
-  upgrade actions, we have to restore the upgraded entities from their
-  backed up state. In other terms the system falls back to an earlier
-  state, which is typically a faster recovery procedure than graceful
-  roll back and depending on the statefulness of the entities involved it
-  may result in significant state/data loss.
-
-.. <MT> Two possible types of failures can happen during an upgrade
-
-.. <MT> We can recover from the failure that occurred in the upgrade process:
-  In this case, a graceful rolling back of the executed part of the
-  upgrade may be possible which would "undo" the executed part in a
-  similar fashion. Thus, such a roll back introduces no more service
-  outage during an upgrade than the executed part introduced. This
-  process typically requires the same amount of time as the executed
-  portion of the upgrade and impose minimal state/data loss.
-
-.. <MT> We cannot recover from the failure that occurred in the upgrade
-   process: In this case, the system needs to fall back to an earlier
-   consistent state by reloading this backed-up state. This is typically
-   a faster recovery procedure than the graceful roll back, but can cause
-   state/data loss. The state/data loss usually depends on the
-   statefulness of the entities whose state is restored from the backup.
-
-The maximum duration of a VNF interruption (Service outage)
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Since not the entire process of a smooth upgrade will affect the VNFs,
-the duration of the VNF interruption may be shorter than the duration
-of the upgrade. In some cases, the VNF running without the control
-from of the VIM is acceptable.
-
-.. <MT> Should require explicitly that the NFVI should be able to
-  provide its services to the VNFs independent of the control plane?
-
-.. <MT> Requirement: The upgrade of the control plane must not cause
-  interruption of the NFVI services provided to the VNFs.
-
-.. <MT> With respect to carrier-grade the yearly service outage of the
-  VNF should not exceed 5' 15" regardless whether it is planned or
-  unplanned outage. Considering the HA requirements TL-9000 requires an
-  end-to-end service recovery time of 15 seconds based on which the ETSI
-  GS NFV-REL 001 V1.1.1 (2015-01) document defines three service
-  availability levels (SAL). The proposed example service recovery times
-  for these levels are:
-
-.. <MT> SAL1: 5-6 seconds
-
-.. <MT> SAL2: 10-15 seconds
-
-.. <MT> SAL3: 20-25 seconds
-
-.. <Pva> my comment was actually that the downtime metrics of the
-  underlying elements, components and services are small fraction of the
-  total E2E service availability time. No-one on the E2E service path
-  will get the whole downtime allocation (in this context it includes
-  upgrade process related outages for the services provided by VIM etc.
-  elements that are subject to upgrade process).
-
-.. <MT> So what you are saying is that the upgrade of any entity
-  (component, service) shouldn't cause even this much service
-  interruption. This was the reason I brought these figures here as well
-  that they are posing some kind of upper-upper boundary. Ideally the
-  interruption is in the millisecond range i.e. no more than a
-  switch-over or a live migration.
-
-.. <MT> Requirement: Any interruption caused to the VNF by the upgrade
-  of the NFVI should be in the sub-second range.
-
-.. <MT]> In the future we also need to consider the upgrade of the NFVI,
-  i.e. HW, firmware, hypervisors, host OS etc.
+- Total upgrade duration should be less than 2 hours. Even time constraint is
+  relieved with HA design, the total time for upgrade operation is recommended
+  to limit in 2 hours. The reason is that upgrade might interfere End-User
+  unexpectedly, shorter maintenance window is less possible risk. In this
+  document, upgrade duration is started at the moment that End-User services
+  are possibly impacted to the moment that upgrade is concluded with either
+  commit or rollback. Regarding on the scale and complexity of OPNFV system,
+  this requirements looks challenging, however OPNFV implementations should
+  target this with introducing novel designs and solutions.
 
 Pre-upgrading Environment
 =========================
