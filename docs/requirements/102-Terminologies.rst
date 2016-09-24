@@ -11,13 +11,13 @@ Backup
   state as it was when the backup was created. Restoring from backup will lose
   volatile states like CPU and memory content. Changes made to the system from
   the moment the backup was created to the moment it is used to restore the
-  (sub)system are also lost in the restoration process. 
+  (sub)system are also lost in the restoration process.
 
 Carrier Grade
   The refers to a system, or a hardware or software component that is extremely
   reliable, well tested and proven in its capabilities. Carrier grade systems are
   tested and engineered to meet or exceed "five nines" high availability standards,
-  and provide very fast fault recovery through redundancy (normally less than 50 
+  and provide very fast fault recovery through redundancy (normally less than 50
   milliseconds). Sometimes, Carrier grade is also referred as Carrier Class.
 
 Downgrade
