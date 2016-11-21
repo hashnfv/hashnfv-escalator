@@ -1,0 +1,28 @@
+CHANGES
+=======
+
+* add escalator frame
+* Fix the trailing white spaces in Line 14 and 20
+* Add license information to conf.py files
+* Upgrade duration requirement
+* delete HA and non-HA description in 105-User_Cases.rst
+* Refact Terminology chapter
+* ESCALATOR-31 Adjusting documentation
+* updates to use new doc toolchain
+* Revise Terminology section
+* ESCALATOR-29: Reference Architecture format bugfix
+* ESCALATOR-28: Revise the Section of Reference Architecture
+* Move files from doc to docs
+* Contribute a RA/Information flows from ZTE's implementation
+* ESCALATOR-18: Use Cases
+* Incorporate software dimensions and other comments
+* Add jianfei.zhang@nokia.com to the contributor(ESCALATOR-22)
+* Transfer late changes from etherpad to rst
+* ESCALATOR-5: Fix syntax error of rst files in doc
+* JIRA ESCALATOR-6 Add a new contributor to INFO file Signed-off-by: Jie Hu <hu.jie@zte.com.cn>
+* JIRA ESCALATOR-3
+* Example as code, documentation template for sphinx build
+* Convert Requirement to .rst. Just for uploading to repo JIRA: ESCALATOR-1 Signed-off-by: Jie Hu <hu.jie@zte.com.cn>
+* Add modified INFO to escalator repo
+* Adding .gitreview to escalator JIRA:0000 more information at https://wiki.opendaylight.org/view/Git-review_Workflow
+* Initial empty repository
