@@ -1,0 +1,10 @@
+include ChangeLog
+include MANIFEST.in pylintrc
+include AUTHORS
+include LICENSE
+include ChangeLog
+include babel.cfg tox.ini
+graft docs
+graft etc
+graft escalator/locale
+global-exclude *.pyc

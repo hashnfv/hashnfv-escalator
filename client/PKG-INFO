@@ -1,0 +1,30 @@
+Metadata-Version: 1.1
+Name: escalatorclient
+Version: 1.0.0
+Summary: escalator Escalator Client Library
+Home-page: http://www.opnfv.org/
+Author: OPNFV
+Author-email: opnfv-tech-discuss@lists.opnfv.org
+License: Apache License, Version 2.0
+Description: Python bindings to the escalator Escalator Client
+        =============================================
+
+        This is a client library for escalator built on the Escalator Client. It provides a Python API (the ``escalatorclient`` module) and a command-line tool (``escalator``). This library fully supports the v1 Escalator Client, while support for the v2 Client is in progress.
+
+        Development takes place via the usual OPNFV processes as outlined in the `developer guide <http://docs.openstack.org/infra/manual/developers.html>`_.
+
+
+Platform: UNKNOWN
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Environment :: Console
+Classifier: Environment :: OPNFV
+Classifier: Intended Audience :: Information Technology
+Classifier: Intended Audience :: System Administrators
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Operating System :: POSIX :: Linux
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 2
+Classifier: Programming Language :: Python :: 2.7
+Classifier: Programming Language :: Python :: 2.6
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.3
