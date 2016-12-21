@@ -25,9 +25,8 @@ import warnings
 from escalatorclient.openstack.common.apiclient import base
 
 
-warnings.warn("The 'escalatorclient.common.base' module is deprecated post "
-              "v.0.12.0. Use 'escalatorclient.openstack.common.apiclient.base' "
-              "instead of this one.", DeprecationWarning)
+warnings.warn("The 'escalatorclient.common.base' module is deprecated",
+              DeprecationWarning)
 
 
 getid = base.getid

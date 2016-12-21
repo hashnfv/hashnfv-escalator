@@ -32,9 +32,7 @@ from oslo_log import log as logging
 import osprofiler.notifier
 import osprofiler.web
 
-from escalator.common import utils
 from escalator.common import config
-from escalator.common import exception
 from escalator.common import wsgi
 from escalator import notifier
 

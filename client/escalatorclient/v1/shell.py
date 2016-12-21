@@ -17,10 +17,6 @@ from __future__ import print_function
 
 import copy
 import functools
-import pprint
-import os
-import json
-
 from oslo_utils import encodeutils
 from oslo_utils import strutils
 import escalatorclient.v1.versions
