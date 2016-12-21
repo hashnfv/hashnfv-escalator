@@ -232,12 +232,9 @@ def get_asynchronous_eventlet_pool(size=1000):
 
 class Server(object):
     """Server class to manage multiple WSGI sockets and applications.
-
-    This class requires initialize_escalator_store set to True if
-    escalator store needs to be initialized.
     """
 
-    def __init__(self, threads=1000, initialize_escalator_store=False):
+    def __init__(self, threads=1000):
         os.umask(0o27)  # ensure files are created with the correct privileges
         self._logger = logging.getLogger("eventlet.wsgi.server")
         self._wsgi_logger = loggers.WritableLogger(self._logger)
@@ -245,9 +242,6 @@ class Server(object):
         self.children = set()
         self.stale_children = set()
         self.running = True
-        # NOTE(abhishek): Allows us to only re-initialize escalator_store when
-        # the API's configuration reloads.
-        self.initialize_escalator_store = initialize_escalator_store
         self.pgid = os.getpid()
         try:
             # NOTE(flaper87): Make sure this process
@@ -362,8 +356,6 @@ class Server(object):
         """
         eventlet.wsgi.MAX_HEADER_LINE = CONF.max_header_line
         self.configure_socket(old_conf, has_changed)
-        if self.initialize_escalator_store:
-            initialize_escalator_store()
 
     def reload(self):
         """

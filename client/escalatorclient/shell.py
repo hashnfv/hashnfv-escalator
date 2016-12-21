@@ -280,7 +280,8 @@ class escalatorShell(object):
                                 'escalator, it is specified in paste '
                                 'configuration file at '
                                 '/etc/escalator/api-paste.ini and '
-                                '/etc/escalator/registry-paste.ini. Without key '
+                                '/etc/escalator/registry-paste.ini. '
+                                'Without key '
                                 'the profiling will not be triggered even '
                                 'if osprofiler is enabled on server side.')
 

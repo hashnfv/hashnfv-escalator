@@ -43,15 +43,10 @@ from oslo_config import cfg
 from oslo_log import log as logging
 from oslo_utils import encodeutils
 from oslo_utils import excutils
-from oslo_utils import netutils
-from oslo_utils import strutils
 import six
 from webob import exc
-import ConfigParser
-
 from escalator.common import exception
 from escalator import i18n
-# from providerclient.v1 import client as provider_client
 
 CONF = cfg.CONF
 
@@ -666,9 +661,11 @@ def ip_into_int(ip):
 
 
 def int_into_ip(num):
-    inter_ip = lambda x: '.'.join(
-        [str(x / (256 ** i) % 256) for i in range(3, -1, -1)])
-    return inter_ip(num)
+    s = []
+    for i in range(4):
+        s.append(str(num % 256))
+        num /= 256
+    return '.'.join(s[::-1])
 
 
 def is_ip_in_cidr(ip, cidr):
@@ -939,6 +936,3 @@ def translate_marks_4_sed_command(ori_str):
             translated_str = translated_str.\
                 replace(translated_mark, translated_marks[translated_mark])
     return translated_str
-
-
-
