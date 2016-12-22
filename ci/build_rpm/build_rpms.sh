@@ -9,7 +9,7 @@ function build_rpm_pkg {
         rm -rf $ESCALATORDIR/build_output
         mkdir -p $ESCALATORDIR/build_output
 
-        sudo docker build -t escalator_rpm .
+        sudo docker build -t escalator_rpm ../../docker
         sudo docker run --rm -v $ESCALATORDIR:/opt/escalator -v $CACHE_DIRECTORY:/home/cache -t  escalator_rpm \
                       /opt/escalator/ci/build_rpm/build_rpms_docker.sh $OPNFV_ARTIFACT_VERSION
 
