@@ -17,11 +17,9 @@ from __future__ import print_function
 
 import copy
 import functools
-from oslo_utils import encodeutils
 from oslo_utils import strutils
 import escalatorclient.v1.versions
 from escalatorclient.common import utils
-from escalatorclient import exc
 
 _bool_strict = functools.partial(strutils.bool_from_string, strict=True)
 
@@ -43,94 +41,10 @@ def do_version(dc, args):
     fields = dict(filter(lambda x: x[1] is not None, vars(args).items()))
 
     # Filter out values we can't use
-    VERSION_PARAMS = escalatorclient.v1.version.VERSION_PARAMS
+    VERSION_PARAMS = escalatorclient.v1.versions.VERSION_PARAMS
     fields = dict(filter(lambda x: x[0] in VERSION_PARAMS, fields.items()))
-    version = dc.version.version(**fields)
+    version = dc.versions.version(**fields)
     _escalator_show(version)
-
-
-@utils.arg('id', metavar='<ID>',
-           help='Filter version to those that have this id.')
-def do_version_detail(dc, args):
-    """Get backend_types of escalator."""
-    version = utils.find_resource(dc.versions, args.id)
-    _escalator_show(version)
-
-
-@utils.arg('name', metavar='<NAME>',
-           help='name of version.')
-@utils.arg('type', metavar='<TYPE>',
-           help='version type.eg redhat7.0...')
-@utils.arg('--size', metavar='<SIZE>',
-           help='size of the version file.')
-@utils.arg('--checksum', metavar='<CHECKSUM>',
-           help='md5 of version file')
-@utils.arg('--version', metavar='<VERSION>',
-           help='version number of version file')
-@utils.arg('--description', metavar='<DESCRIPTION>',
-           help='description of version file')
-@utils.arg('--status', metavar='<STATUS>',
-           help='version file status.default:init')
-def do_version_add(dc, args):
-    """Add a version."""
-
-    fields = dict(filter(lambda x: x[1] is not None, vars(args).items()))
-
-    # Filter out values we can't use
-    CREATE_PARAMS = escalatorclient.v1.versions.CREATE_PARAMS
-    fields = dict(filter(lambda x: x[0] in CREATE_PARAMS, fields.items()))
-
-    version = dc.versions.add(**fields)
-    _escalator_show(version)
-
-
-@utils.arg('id', metavar='<ID>',
-           help='ID of versions.')
-@utils.arg('--name', metavar='<NAME>',
-           help='name of version.')
-@utils.arg('--type', metavar='<TYPE>',
-           help='version type.eg redhat7.0...')
-@utils.arg('--size', metavar='<SIZE>',
-           help='size of the version file.')
-@utils.arg('--checksum', metavar='<CHECKSUM>',
-           help='md5 of version file')
-@utils.arg('--version', metavar='<VERSION>',
-           help='version number of version file')
-@utils.arg('--description', metavar='<DESCRIPTION>',
-           help='description of version file')
-@utils.arg('--status', metavar='<STATUS>',
-           help='version file status.default:init')
-def do_version_update(dc, args):
-    """Add a version."""
-
-    fields = dict(filter(lambda x: x[1] is not None, vars(args).items()))
-
-    # Filter out values we can't use
-    CREATE_PARAMS = escalatorclient.v1.versions.CREATE_PARAMS
-    fields = dict(filter(lambda x: x[0] in CREATE_PARAMS, fields.items()))
-    version_id = fields.get('id', None)
-    version = dc.versions.update(version_id, **fields)
-    _escalator_show(version)
-
-
-@utils.arg('id', metavar='<ID>', nargs='+',
-           help='ID of versions.')
-def do_version_delete(dc, args):
-    """Delete specified template(s)."""
-    fields = dict(filter(lambda x: x[1] is not None, vars(args).items()))
-    versions = fields.get('id', None)
-    for version in versions:
-        try:
-            if args.verbose:
-                print('Requesting version delete for %s ...' %
-                      encodeutils.safe_decode(version), end=' ')
-            dc.versions.delete(version)
-            if args.verbose:
-                print('[Done]')
-        except exc.HTTPException as e:
-            if args.verbose:
-                print('[Fail]')
-            print('%s: Unable to delete version %s' % (e, version))
 
 
 @utils.arg('--name', metavar='<NAME>',
@@ -168,11 +82,3 @@ def do_cluster_version_list(dc, args):
                'checksum', 'description', 'status', 'VERSION_PATCH']
 
     utils.print_list(versions, columns)
-
-
-@utils.arg('id', metavar='<ID>',
-           help='Filter version patch to those that have this id.')
-def do_version_patch_detail(dc, args):
-    """Get version_patch of escalator."""
-    version = utils.find_resource(dc.version_patchs, args.id)
-    _escalator_show(version)

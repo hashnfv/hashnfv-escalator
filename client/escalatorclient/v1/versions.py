@@ -105,23 +105,6 @@ class VersionManager(base.ManagerWithFind):
                     pass
         return meta
 
-    def get(self, version, **kwargs):
-        """Get the metadata for a specific version.
-
-        :param version: image object or id to look up
-        :rtype: :class:`version`
-        """
-        version_id = base.getid(version)
-        resp, body = self.client.get('/v1/versions/%s'
-                                     % urlparse.quote(str(version_id)))
-        # meta = self._version_meta_from_headers(resp.headers)
-        return_request_id = kwargs.get('return_req_id', None)
-        if return_request_id is not None:
-            return_request_id.append(resp.headers.get(OS_REQ_ID_HDR, None))
-        # return version(self, meta)
-        return Version(self, self._format_version_meta_for_user(
-            body['version']))
-
     def _build_params(self, parameters):
         params = {'limit': parameters.get('page_size', DEFAULT_PAGE_SIZE)}
 
@@ -223,65 +206,6 @@ class VersionManager(base.ManagerWithFind):
             params['marker'] = last_version
             seen_last_page = 0
 
-    def add(self, **kwargs):
-        """Add a version
-
-        TODO(bcwaldon): document accepted params
-        """
-
-        fields = {}
-        for field in kwargs:
-            if field in CREATE_PARAMS:
-                fields[field] = kwargs[field]
-            elif field == 'return_req_id':
-                continue
-            else:
-                msg = 'create() got an unexpected keyword argument \'%s\''
-                raise TypeError(msg % field)
-
-        hdrs = self._version_meta_to_headers(fields)
-
-        resp, body = self.client.post('/v1/versions',
-                                      headers=None,
-                                      data=hdrs)
-        return_request_id = kwargs.get('return_req_id', None)
-        if return_request_id is not None:
-            return_request_id.append(resp.headers.get(OS_REQ_ID_HDR, None))
-
-        return Version(self, self._format_version_meta_for_user(
-            body['version']))
-
-    def delete(self, version, **kwargs):
-        """Delete an version."""
-        url = "/v1/versions/%s" % base.getid(version)
-        resp, body = self.client.delete(url)
-        return_request_id = kwargs.get('return_req_id', None)
-        if return_request_id is not None:
-            return_request_id.append(resp.headers.get(OS_REQ_ID_HDR, None))
-
-    def update(self, version, **kwargs):
-        """Update an version
-
-        TODO(bcwaldon): document accepted params
-        """
-        hdrs = {}
-        fields = {}
-        for field in kwargs:
-            if field in CREATE_PARAMS:
-                fields[field] = kwargs[field]
-            elif field == 'return_req_id':
-                continue
-        hdrs.update(self._version_meta_to_headers(fields))
-
-        url = '/v1/versions/%s' % base.getid(version)
-        resp, body = self.client.put(url, headers=None, data=hdrs)
-        return_request_id = kwargs.get('return_req_id', None)
-        if return_request_id is not None:
-            return_request_id.append(resp.headers.get(OS_REQ_ID_HDR, None))
-
-        return Version(self, self._format_version_meta_for_user(
-            body['version_meta']))
-
     def version(self, **kwargs):
         """Get internal or external version of escalator.
 
@@ -295,7 +219,7 @@ class VersionManager(base.ManagerWithFind):
                 msg = 'install() got an unexpected keyword argument \'%s\''
                 raise TypeError(msg % field)
 
-        url = '/v1/version'
-        hdrs = self._restore_meta_to_headers(fields)
+        url = '/v1/versions'
+        hdrs = self._version_meta_to_headers(fields)
         resp, body = self.client.post(url, headers=None, data=hdrs)
         return Version(self, body)

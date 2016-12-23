@@ -33,4 +33,4 @@ class Client(object):
         endpoint, version = utils.strip_version(endpoint)
         self.version = version or 1.0
         self.http_client = http.HTTPClient(endpoint, *args, **kwargs)
-        self.node = VersionManager(self.http_client)
+        self.versions = VersionManager(self.http_client)

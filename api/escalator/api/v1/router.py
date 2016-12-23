@@ -13,6 +13,7 @@
 #    License for the specific language governing permissions and limitations
 #    under the License.
 from escalator.common import wsgi
+from escalator.api.v1 import versions
 
 
 class API(wsgi.Router):
@@ -21,5 +22,12 @@ class API(wsgi.Router):
 
     def __init__(self, mapper):
         wsgi.Resource(wsgi.RejectMethodController())
+
+        versions_resource = versions.create_resource()
+
+        mapper.connect("/versions",
+                       controller=versions_resource,
+                       action='version',
+                       conditions={'method': ['POST']})
 
         super(API, self).__init__(mapper)
