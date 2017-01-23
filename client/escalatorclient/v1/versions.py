@@ -22,6 +22,7 @@ import six.moves.urllib.parse as urlparse
 
 from escalatorclient.common import utils
 from escalatorclient.openstack.common.apiclient import base
+from escalatorclient.common.http import HTTPClient
 
 CREATE_PARAMS = ('id', 'name', 'description', 'type', 'version', 'size',
                  'checksum', 'status', 'os_status', 'version_patch')
@@ -53,8 +54,14 @@ class Version(base.Resource):
 class VersionManager(base.ManagerWithFind):
     resource_class = Version
 
+    def get_version_client(self):
+        endpoint = "http://127.0.0.1:19292"
+        client = HTTPClient(endpoint)
+        return client
+
     def _list(self, url, response_key, obj_class=None, body=None):
-        resp, body = self.client.get(url)
+        version_client = self.get_version_client()
+        resp, body = version_client.get(url)
 
         if obj_class is None:
             obj_class = self.resource_class
