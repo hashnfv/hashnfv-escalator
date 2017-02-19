@@ -149,7 +149,7 @@ def do_version_delete(dc, args):
 @utils.arg('--sort-dir', default='asc',
            choices=escalatorclient.v1.versions.SORT_DIR_VALUES,
            help='Sort version list in specified direction.')
-def do_version_list(dc, args):
+def do_cluster_version_list(dc, args):
     """List hosts you can access."""
     filter_keys = ['name', 'type', 'status', 'version']
     filter_items = [(key, getattr(args, key)) for key in filter_keys]
