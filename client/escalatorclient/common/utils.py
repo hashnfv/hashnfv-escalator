@@ -23,13 +23,13 @@ import re
 import sys
 import threading
 import uuid
-from oslo.utils import encodeutils
-from oslo.utils import strutils
+from oslo_utils import encodeutils
+from oslo_utils import strutils
 import prettytable
 import six
 
 from escalatorclient import exc
-from oslo.utils import importutils
+from oslo_utils import importutils
 
 if os.name == 'nt':
     import msvcrt

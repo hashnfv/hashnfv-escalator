@@ -19,10 +19,10 @@ RPC Controller
 import datetime
 import traceback
 
-from oslo.config import cfg
-from oslo.log import log as logging
-import oslo.utils.importutils as imp
-from oslo.utils import timeutils
+from oslo_config import cfg
+from oslo_log import log as logging
+import oslo_utils.importutils as imp
+from oslo_utils import timeutils
 import six
 from webob import exc
 

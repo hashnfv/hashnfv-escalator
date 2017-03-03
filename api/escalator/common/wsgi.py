@@ -33,11 +33,11 @@ from eventlet.green import socket
 from eventlet.green import ssl
 import eventlet.greenio
 import eventlet.wsgi
-from oslo.serialization import jsonutils
-from oslo.concurrency import processutils
-from oslo.config import cfg
-from oslo.log import log as logging
-from oslo.log import loggers
+from oslo_serialization import jsonutils
+from oslo_concurrency import processutils
+from oslo_config import cfg
+from oslo_log import log as logging
+from oslo_log import loggers
 import routes
 import routes.middleware
 import six

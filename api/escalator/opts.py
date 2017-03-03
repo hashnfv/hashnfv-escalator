@@ -43,7 +43,7 @@ _api_opts = [
 
 
 def list_api_opts():
-    """Return a list of oslo.config options available in Escalator API service.
+    """Return a list of oslo_config options available in Escalator API service.
 
     Each element of the list is a tuple. The first element is the name of the
     group under which the list of elements in the second element will be
@@ -51,7 +51,7 @@ def list_api_opts():
     config files.
 
     This function is also discoverable via the 'escalator.api' entry point
-    under the 'oslo.config.opts' namespace.
+    under the 'oslo_config.opts' namespace.
 
     The purpose of this is to allow tools like the Oslo sample config file
     generator to discover the options exposed to users by escalator.

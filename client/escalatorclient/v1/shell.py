@@ -17,7 +17,7 @@ from __future__ import print_function
 
 import copy
 import functools
-from oslo.utils import strutils
+from oslo_utils import strutils
 import escalatorclient.v1.versions
 from escalatorclient.common import utils
 

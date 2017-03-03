@@ -14,9 +14,9 @@
 #    License for the specific language governing permissions and limitations
 #    under the License.
 
-from oslo.config import cfg
-from oslo.log import log as logging
-import oslo.messaging
+from oslo_config import cfg
+from oslo_log import log as logging
+import oslo_messaging
 
 from escalator import i18n
 
@@ -44,7 +44,7 @@ LOG = logging.getLogger(__name__)
 
 
 def get_transport():
-    return oslo.messaging.get_transport(CONF)
+    return oslo_messaging.get_transport(CONF)
 
 
 class Notifier(object):
@@ -53,7 +53,7 @@ class Notifier(object):
     def __init__(self):
         publisher_id = CONF.default_publisher_id
         self._transport = get_transport()
-        self._notifier = oslo.messaging.Notifier(self._transport,
+        self._notifier = oslo_messaging.Notifier(self._transport,
                                                  publisher_id=publisher_id)
 
     def warn(self, event_type, payload):

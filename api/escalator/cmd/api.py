@@ -26,9 +26,9 @@ import sys
 
 import eventlet
 
-from oslo.service import systemd
-from oslo.config import cfg
-from oslo.log import log as logging
+from oslo_service import systemd
+from oslo_config import cfg
+from oslo_log import log as logging
 import osprofiler.notifier
 import osprofiler.web
 

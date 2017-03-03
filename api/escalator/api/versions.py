@@ -15,8 +15,8 @@
 
 import httplib
 
-from oslo.serialization import jsonutils
-from oslo.config import cfg
+from oslo_serialization import jsonutils
+from oslo_config import cfg
 import webob.dec
 
 from escalator.common import wsgi
