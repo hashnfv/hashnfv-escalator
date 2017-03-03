@@ -24,8 +24,8 @@
 #
 ########################################################################
 
-from oslo_utils import encodeutils
-from oslo_utils import uuidutils
+from oslo.utils import encodeutils
+from oslo.utils import uuidutils
 import six
 
 from escalatorclient.openstack.common._i18n import _

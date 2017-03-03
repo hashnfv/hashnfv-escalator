@@ -24,9 +24,9 @@ import logging.handlers
 import os
 import tempfile
 
-from oslo_concurrency import lockutils
-from oslo_config import cfg
-from oslo_policy import policy
+from oslo.concurrency import lockutils
+from oslo.config import cfg
+from oslo.policy import policy
 from paste import deploy
 
 from escalator import i18n

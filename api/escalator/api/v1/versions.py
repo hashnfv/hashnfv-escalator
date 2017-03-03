@@ -16,7 +16,7 @@
 """
 /hosts endpoint for Escalator v1 API
 """
-from oslo_log import log as logging
+from oslo.log import log as logging
 from escalator import i18n
 from escalator import notifier
 from escalator.common import utils

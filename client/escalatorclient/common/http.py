@@ -16,12 +16,12 @@
 import copy
 import logging
 import socket
-from oslo_utils import encodeutils
+from oslo.utils import encodeutils
 from escalatorclient.common import https
 from escalatorclient.common.utils import safe_header
 from escalatorclient import exc
-from oslo_utils import importutils
-from oslo_utils import netutils
+from oslo.utils import importutils
+from oslo.utils import netutils
 from simplejson import decoder
 import requests
 try:

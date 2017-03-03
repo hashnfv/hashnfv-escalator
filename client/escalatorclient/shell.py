@@ -29,8 +29,8 @@ from os.path import expanduser
 import sys
 import traceback
 
-from oslo_utils import encodeutils
-from oslo_utils import importutils
+from oslo.utils import encodeutils
+from oslo.utils import importutils
 import six.moves.urllib.parse as urlparse
 
 import escalatorclient

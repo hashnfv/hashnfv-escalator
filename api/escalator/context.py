@@ -13,7 +13,7 @@
 #    License for the specific language governing permissions and limitations
 #    under the License.
 
-from oslo_context import context
+from oslo.context import context
 
 from escalator.api import policy
 

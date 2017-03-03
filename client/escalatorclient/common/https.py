@@ -25,7 +25,7 @@ try:
 except ImportError:
     from urllib3 import connectionpool
 
-from oslo_utils import encodeutils
+from oslo.utils import encodeutils
 import six
 # NOTE(jokke): simplified transition to py3, behaves like py2 xrange
 from six.moves import range

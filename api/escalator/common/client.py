@@ -40,8 +40,8 @@ try:
 except ImportError:
     SENDFILE_SUPPORTED = False
 
-from oslo_log import log as logging
-from oslo_utils import encodeutils
+from oslo.log import log as logging
+from oslo.utils import encodeutils
 import six
 # NOTE(jokke): simplified transition to py3, behaves like py2 xrange
 from six.moves import range

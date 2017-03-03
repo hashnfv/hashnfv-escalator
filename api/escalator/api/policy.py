@@ -17,9 +17,9 @@
 """Policy Engine For Escalator"""
 
 
-from oslo_config import cfg
-from oslo_log import log as logging
-from oslo_policy import policy
+from oslo.config import cfg
+from oslo.log import log as logging
+from oslo.policy import policy
 
 from escalator.common import exception
 from escalator import i18n

@@ -15,8 +15,8 @@
 
 import copy
 
-from oslo_utils import encodeutils
-from oslo_utils import strutils
+from oslo.utils import encodeutils
+from oslo.utils import strutils
 import six
 import six.moves.urllib.parse as urlparse
 
