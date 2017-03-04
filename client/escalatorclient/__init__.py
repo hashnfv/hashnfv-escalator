@@ -23,7 +23,7 @@ except ImportError:
 
 import pbr.version
 
-version_info = pbr.version.VersionInfo('python-escalatorclient')
+version_info = pbr.version.VersionInfo('escalatorclient')
 
 try:
     __version__ = version_info.version_string()
