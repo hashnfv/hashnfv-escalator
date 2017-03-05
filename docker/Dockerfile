@@ -1,5 +1,7 @@
 FROM centos:7
 LABEL escalator_image_version=1.0
+ARG BRANCH
+ENV BRANCH=${BRANCH:-master}
 RUN yum -y update
 RUN yum -y install centos-release-openstack-newton
 RUN yum -y install \
