@@ -14,6 +14,7 @@
 #    under the License.
 from escalator.common import wsgi
 from escalator.api.v1 import versions
+from escalator.api.v1 import clusters
 
 
 class API(wsgi.Router):
@@ -24,6 +25,12 @@ class API(wsgi.Router):
         wsgi.Resource(wsgi.RejectMethodController())
 
         versions_resource = versions.create_resource()
+        clusters_resource = clusters.create_resource()
+
+        mapper.connect("/clusters",
+                       controller=clusters_resource,
+                       action='detail',
+                       conditions={'method': ['GET']})
 
         mapper.connect("/versions",
                        controller=versions_resource,
