@@ -28,7 +28,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = 'python-escalatorclient'
+project = 'escalatorclient'
 copyright = u'OpenStack Foundation'
 
 # If true, '()' will be appended to :func: etc. cross-reference text.

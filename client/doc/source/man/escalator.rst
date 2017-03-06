@@ -84,4 +84,4 @@ BUGS
 ====
 
 escalator client is hosted in Launchpad so you can view current bugs at
-https://bugs.launchpad.net/python-escalatorclient/.
+https://bugs.launchpad.net/escalatorclient/.

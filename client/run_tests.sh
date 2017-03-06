@@ -2,7 +2,7 @@
 
 function usage {
   echo "Usage: $0 [OPTION]..."
-  echo "Run python-escalatorclient's test suite(s)"
+  echo "Run escalatorclient's test suite(s)"
   echo ""
   echo "  -p, --pep8               Just run flake8"
   echo "  -h, --help               Print this usage message"

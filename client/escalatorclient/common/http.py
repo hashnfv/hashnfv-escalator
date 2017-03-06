@@ -45,7 +45,7 @@ if not hasattr(parse, 'parse_qsl'):
 osprofiler_web = importutils.try_import("osprofiler.web")
 
 LOG = logging.getLogger(__name__)
-USER_AGENT = 'python-escalatorclient'
+USER_AGENT = 'escalatorclient'
 CHUNKSIZE = 1024 * 64  # 64kB
 
 
