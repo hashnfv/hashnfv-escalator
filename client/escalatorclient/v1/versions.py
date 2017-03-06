@@ -211,6 +211,7 @@ class VersionManager(base.ManagerWithFind):
 
         TODO(bcwaldon): document accepted params
         """
+        version_client = HTTPClient("http://127.0.0.1:19393")
         fields = {}
         for field in kwargs:
             if field in VERSION_PARAMS:
@@ -221,5 +222,5 @@ class VersionManager(base.ManagerWithFind):
 
         url = '/v1/versions'
         hdrs = self._version_meta_to_headers(fields)
-        resp, body = self.client.post(url, headers=None, data=hdrs)
+        resp, body = version_client.post(url, headers=None, data=hdrs)
         return Version(self, body)
