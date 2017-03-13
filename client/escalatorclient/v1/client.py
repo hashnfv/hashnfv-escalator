@@ -16,6 +16,7 @@
 from escalatorclient.common import http
 from escalatorclient.common import utils
 from escalatorclient.v1.versions import VersionManager
+from escalatorclient.v1.clusters import ClusterManager
 
 
 class Client(object):
@@ -34,3 +35,4 @@ class Client(object):
         self.version = version or 1.0
         self.http_client = http.HTTPClient(endpoint, *args, **kwargs)
         self.versions = VersionManager(self.http_client)
+        self.clusters = ClusterManager(self.http_client)

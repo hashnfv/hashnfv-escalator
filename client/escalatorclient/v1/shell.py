@@ -19,6 +19,7 @@ import copy
 import functools
 from oslo_utils import strutils
 import escalatorclient.v1.versions
+import escalatorclient.v1.clusters
 from escalatorclient.common import utils
 
 _bool_strict = functools.partial(strutils.bool_from_string, strict=True)
@@ -82,3 +83,58 @@ def do_cluster_version_list(dc, args):
                'checksum', 'description', 'status', 'VERSION_PATCH']
 
     utils.print_list(versions, columns)
+
+
+@utils.arg('--name', metavar='<NAME>',
+           help='Filter version to those that have this name.')
+@utils.arg('--status', metavar='<STATUS>',
+           help='Filter version status.')
+@utils.arg('--type', metavar='<type>',
+           help='Filter by type.')
+@utils.arg('--version', metavar='<version>',
+           help='Filter by version number.')
+@utils.arg('--page-size', metavar='<SIZE>', default=None, type=int,
+           help='Number to request in each paginated request.')
+@utils.arg('--sort-key', default='name',
+           choices=escalatorclient.v1.versions.SORT_KEY_VALUES,
+           help='Sort version list by specified field.')
+@utils.arg('--sort-dir', default='asc',
+           choices=escalatorclient.v1.versions.SORT_DIR_VALUES,
+           help='Sort version list in specified direction.')
+def do_cluster_list(gc, args):
+    """List clusters you can access."""
+    filter_keys = ['name']
+    filter_items = [(key, getattr(args, key)) for key in filter_keys]
+    filters = dict([item for item in filter_items if item[1] is not None])
+
+    kwargs = {'filters': filters}
+    if args.page_size is not None:
+        kwargs['page_size'] = args.page_size
+
+    kwargs['sort_key'] = args.sort_key
+    kwargs['sort_dir'] = args.sort_dir
+
+    clusters = gc.clusters.list(**kwargs)
+
+    columns = ['ID', 'Name', 'Description', 'Nodes', 'Networks',
+               'Auto_scale', 'Use_dns', 'Status']
+    utils.print_list(clusters, columns)
+
+
+@utils.arg('id', metavar='<ID>',
+           help='Filter cluster to those that have this id.')
+def do_cluster_detail(gc, args):
+    """List cluster you can access."""
+    filter_keys = ['id']
+    filter_items = [(key, getattr(args, key)) for key in filter_keys]
+    filters = dict([item for item in filter_items if item[1] is not None])
+    fields = dict(filter(lambda x: x[1] is not None, vars(args).items()))
+    kwargs = {'filters': filters}
+    if filters:
+        cluster = utils.find_resource(gc.clusters, fields.pop('id'))
+        _escalator_show(cluster)
+    else:
+        cluster = gc.clusters.list(**kwargs)
+        columns = ['ID', 'Name', 'Description', 'Nodes',
+                   'Networks', 'Auto_scale', 'Use_dns']
+        utils.print_list(cluster, columns)
