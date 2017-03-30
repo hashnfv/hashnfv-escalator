@@ -15,6 +15,7 @@
 from escalator.common import wsgi
 from escalator.api.v1 import versions
 from escalator.api.v1 import clusters
+from escalator.api.v1 import install
 
 
 class API(wsgi.Router):
@@ -36,5 +37,11 @@ class API(wsgi.Router):
                        controller=versions_resource,
                        action='version',
                        conditions={'method': ['POST']})
+
+        install_resource = install.create_resource()
+        mapper.connect("/update/{cluster_id}",
+                       controller=install_resource,
+                       action='update_progress',
+                       conditions={'method': ['GET']})
 
         super(API, self).__init__(mapper)

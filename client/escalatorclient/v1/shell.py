@@ -20,6 +20,7 @@ import functools
 from oslo_utils import strutils
 import escalatorclient.v1.versions
 import escalatorclient.v1.clusters
+import escalatorclient.v1.update
 from escalatorclient.common import utils
 
 _bool_strict = functools.partial(strutils.bool_from_string, strict=True)
@@ -138,3 +139,27 @@ def do_cluster_detail(gc, args):
         columns = ['ID', 'Name', 'Description', 'Nodes',
                    'Networks', 'Auto_scale', 'Use_dns']
         utils.print_list(cluster, columns)
+
+
+@utils.arg('cluster_id', metavar='<CLUSTER_ID>',
+           help='The cluster ID to update os and TECS.')
+@utils.arg('--hosts', metavar='<HOSTS>', nargs='+',
+           help='The host ID to update')
+@utils.arg('--update-object', metavar='<UPDATE_OBJECT>',
+           help='update object:vplat or tecs or zenic......')
+@utils.arg('--version-id', metavar='<VERSION>',
+           help='if not patch, update version id is used to update.')
+@utils.arg('--version-patch-id', metavar='<VERSION_PATCH>',
+           help='if update version patch, version patch id is needed')
+@utils.arg('--update-script', metavar='<UPDATE_SCRIPT>',
+           help='update script in /var/lib/daisy/os')
+def do_update(gc, args):
+    """update TECS."""
+    fields = dict(filter(lambda x: x[1] is not None, vars(args).items()))
+
+    # Filter out values we can't use
+    CREATE_PARAMS = escalatorclient.v1.update.CREATE_PARAMS
+    fields = dict(filter(lambda x: x[0] in CREATE_PARAMS, fields.items()))
+
+    update = gc.update.update(**fields)
+    _escalator_show(update)
