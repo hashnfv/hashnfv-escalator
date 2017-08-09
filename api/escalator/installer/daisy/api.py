@@ -12,3 +12,7 @@ def cluster_list(request):
 
 def cluster_get(request, cluster_id):
     return daisyclient(request).clusters.get(cluster_id)
+
+
+def update(request, cluster_id):
+    return daisyclient(request).install.update(cluster_id)
